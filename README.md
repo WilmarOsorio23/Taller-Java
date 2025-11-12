@@ -1,6 +1,6 @@
-# Taller Evaluativo: Métodos HTTP
+# 🧩 Taller Evaluativo: Métodos HTTP
 
-**Materia:** Construcción de Elementos de Software Web III  
+**Materia:** Construcción de Elementos de Software Web III**  
 **Modalidad:** Individual  
 **Porcentaje:** 30% del Taller 1  
 **Fecha de entrega:** Hasta el 12 de noviembre  
@@ -8,14 +8,14 @@
 
 ---
 
-## Objetivo de la Actividad
+## 🎯 Objetivo de la Actividad
 
 El propósito de este taller es comprender y aplicar los **métodos HTTP** dentro del desarrollo de software web.  
 Se busca que el estudiante identifique los diferentes métodos, su aplicabilidad, su relación con la arquitectura web (REST, SOAP, etc.) y su implementación práctica mediante ejemplos y código real.
 
 ---
 
-## 1. Listado de Métodos HTTP
+## 📚 1. Listado de Métodos HTTP
 
 | Método | Descripción |
 |:--------|:-------------|
@@ -31,7 +31,7 @@ Se busca que el estudiante identifique los diferentes métodos, su aplicabilidad
 
 ---
 
-##  2. Aplicabilidad de Cada Método
+## ⚙️ 2. Aplicabilidad de Cada Método
 
 | Método | Cuándo se usa | Por qué se usa |
 |:--------|:----------------|:----------------|
@@ -47,10 +47,11 @@ Se busca que el estudiante identifique los diferentes métodos, su aplicabilidad
 
 ---
 
-## 3. Relación con la Arquitectura Web
+## 🧠 3. Relación con la Arquitectura Web
 
-### Arquitectura REST (Representational State Transfer)
-REST utiliza los métodos HTTP para definir acciones sobre recursos, cumpliendo el principio CRUD:
+### 🔹 Arquitectura REST (Representational State Transfer)
+
+REST utiliza los métodos HTTP para definir acciones sobre recursos, cumpliendo el principio **CRUD**:
 
 | Acción | Método HTTP | Descripción |
 |:--------|:---------------|:-------------|
@@ -63,28 +64,35 @@ REST se basa en **URI (Uniform Resource Identifier)**, usa **JSON o XML** como f
 
 ---
 
-###  Arquitectura SOAP (Simple Object Access Protocol)
+### 🔹 Arquitectura SOAP (Simple Object Access Protocol)
+
 SOAP también usa HTTP, pero no depende de sus métodos.  
 Normalmente utiliza **POST** para enviar mensajes XML estructurados que contienen la información de la operación.  
 A diferencia de REST, SOAP se enfoca más en la **formalidad, seguridad y confiabilidad de los mensajes**, siendo común en entornos empresariales.
 
 ---
 
-###  Otras Arquitecturas Modernas
+### 🔹 Otras Arquitecturas Modernas
+
 - **GraphQL:** usa principalmente **POST**, ya que las consultas se envían en el cuerpo de la solicitud.  
 - **gRPC:** emplea **HTTP/2** y define métodos mediante archivos `.proto`, lo que lo hace muy eficiente en microservicios.
 
 ---
 
-##  4. Forma de Uso: Ejemplos Prácticos y Sintaxis
+## 💻 4. Forma de Uso: Ejemplos Prácticos y Sintaxis
 
-### Ejemplo 1: Método GET
+A continuación se presentan ejemplos prácticos de uso de los principales métodos HTTP y una implementación completa en Python con Flask.
+
+---
+
+### 🔸 Ejemplos de Peticiones HTTP
+
 ```http
+### Ejemplo 1: Método GET
 GET /api/usuarios HTTP/1.1
 Host: ejemplo.com
 Accept: application/json
 Authorization: Bearer <token>
-
 
 ### Ejemplo 2: Método POST
 POST /api/usuarios HTTP/1.1
@@ -97,9 +105,7 @@ Content-Type: application/json
   "rol": "estudiante"
 }
 
-
-#### Ejemplo 3: Método PUT
-
+### Ejemplo 3: Método PUT
 PUT /api/usuarios/1 HTTP/1.1
 Host: ejemplo.com
 Content-Type: application/json
@@ -111,7 +117,6 @@ Content-Type: application/json
 }
 
 ### Ejemplo 4: Método PATCH
-
 PATCH /api/usuarios/1 HTTP/1.1
 Host: ejemplo.com
 Content-Type: application/json
@@ -120,61 +125,7 @@ Content-Type: application/json
   "rol": "administrador"
 }
 
-
 ### Ejemplo 5: Método DELETE
-
 DELETE /api/usuarios/1 HTTP/1.1
 Host: ejemplo.com
 Authorization: Bearer <token>
-
-
-### Código en Python (Flask)
-
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-inventario = [
-    {"id": 1, "nombre": "Teclado", "cantidad": 5},
-    {"id": 2, "nombre": "Mouse", "cantidad": 10}
-]
-
-# GET - Consultar todos los ítems
-@app.route('/api/items', methods=['GET'])
-def listar_items():
-    return jsonify(inventario), 200
-
-# POST - Agregar un nuevo ítem
-@app.route('/api/items', methods=['POST'])
-def agregar_item():
-    nuevo_item = request.json
-    inventario.append(nuevo_item)
-    return jsonify({"mensaje": "Item agregado correctamente", "item": nuevo_item}), 201
-
-# PUT - Actualizar completamente un ítem
-@app.route('/api/items/<int:id>', methods=['PUT'])
-def actualizar_item(id):
-    for item in inventario:
-        if item["id"] == id:
-            item.update(request.json)
-            return jsonify({"mensaje": "Item actualizado correctamente", "item": item}), 200
-    return jsonify({"error": "Item no encontrado"}), 404
-
-# PATCH - Modificar parcialmente un ítem
-@app.route('/api/items/<int:id>', methods=['PATCH'])
-def modificar_item(id):
-    for item in inventario:
-        if item["id"] == id:
-            for key, value in request.json.items():
-                item[key] = value
-            return jsonify({"mensaje": "Item modificado parcialmente", "item": item}), 200
-    return jsonify({"error": "Item no encontrado"}), 404
-
-# DELETE - Eliminar un ítem
-@app.route('/api/items/<int:id>', methods=['DELETE'])
-def eliminar_item(id):
-    global inventario
-    inventario = [item for item in inventario if item["id"] != id]
-    return jsonify({"mensaje": f"Item con id {id} eliminado"}), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)
