@@ -1,4 +1,4 @@
-# 🧩 Taller Evaluativo: Métodos HTTP
+#  Taller Evaluativo: Métodos HTTP
 
 **Materia:** Construcción de Elementos de Software Web III**  
 **Modalidad:** Individual  
@@ -8,14 +8,14 @@
 
 ---
 
-## 🎯 Objetivo de la Actividad
+##  Objetivo de la Actividad
 
 El propósito de este taller es comprender y aplicar los **métodos HTTP** dentro del desarrollo de software web.  
 Se busca que el estudiante identifique los diferentes métodos, su aplicabilidad, su relación con la arquitectura web (REST, SOAP, etc.) y su implementación práctica mediante ejemplos y código real.
 
 ---
 
-## 📚 1. Listado de Métodos HTTP
+##  1. Listado de Métodos HTTP
 
 | Método | Descripción |
 |:--------|:-------------|
@@ -31,7 +31,7 @@ Se busca que el estudiante identifique los diferentes métodos, su aplicabilidad
 
 ---
 
-## ⚙️ 2. Aplicabilidad de Cada Método
+##  2. Aplicabilidad de Cada Método
 
 | Método | Cuándo se usa | Por qué se usa |
 |:--------|:----------------|:----------------|
@@ -47,9 +47,9 @@ Se busca que el estudiante identifique los diferentes métodos, su aplicabilidad
 
 ---
 
-## 🧠 3. Relación con la Arquitectura Web
+##  3. Relación con la Arquitectura Web
 
-### 🔹 Arquitectura REST (Representational State Transfer)
+###  Arquitectura REST (Representational State Transfer)
 
 REST utiliza los métodos HTTP para definir acciones sobre recursos, cumpliendo el principio **CRUD**:
 
@@ -64,7 +64,7 @@ REST se basa en **URI (Uniform Resource Identifier)**, usa **JSON o XML** como f
 
 ---
 
-### 🔹 Arquitectura SOAP (Simple Object Access Protocol)
+###  Arquitectura SOAP (Simple Object Access Protocol)
 
 SOAP también usa HTTP, pero no depende de sus métodos.  
 Normalmente utiliza **POST** para enviar mensajes XML estructurados que contienen la información de la operación.  
@@ -72,20 +72,20 @@ A diferencia de REST, SOAP se enfoca más en la **formalidad, seguridad y confia
 
 ---
 
-### 🔹 Otras Arquitecturas Modernas
+###  Otras Arquitecturas Modernas
 
 - **GraphQL:** usa principalmente **POST**, ya que las consultas se envían en el cuerpo de la solicitud.  
 - **gRPC:** emplea **HTTP/2** y define métodos mediante archivos `.proto`, lo que lo hace muy eficiente en microservicios.
 
 ---
 
-## 💻 4. Forma de Uso: Ejemplos Prácticos y Sintaxis
+##  4. Forma de Uso: Ejemplos Prácticos y Sintaxis
 
 A continuación se presentan ejemplos prácticos de uso de los principales métodos HTTP y una implementación completa en Python con Flask.
 
 ---
 
-### 🔸 Ejemplos de Peticiones HTTP
+###  Ejemplos de Peticiones HTTP
 
 ```http
 ### Ejemplo 1: Método GET
