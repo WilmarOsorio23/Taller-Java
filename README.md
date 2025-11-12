@@ -129,3 +129,152 @@ Content-Type: application/json
 DELETE /api/usuarios/1 HTTP/1.1
 Host: ejemplo.com
 Authorization: Bearer <token>
+
+
+
+###  Código completo: `app.py`
+```python
+# ==========================================
+#  API Básica con Métodos HTTP en Flask
+# Autor: Wilmar Osorio
+# ==========================================
+
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# Base de datos temporal (solo para ejemplo)
+usuarios = [
+    {"id": 1, "nombre": "Carlos"},
+    {"id": 2, "nombre": "María"}
+]
+
+# ==========================================
+#  MÉTODO GET - Consultar información
+# ==========================================
+@app.route('/usuarios', methods=['GET'])
+def obtener_usuarios():
+    # Devuelve la lista completa de usuarios.
+    # Ejemplo: GET http://localhost:5000/usuarios
+    return jsonify(usuarios), 200
+
+@app.route('/usuarios/<int:id>', methods=['GET'])
+def obtener_usuario(id):
+    # Devuelve un usuario específico según su ID.
+    # Ejemplo: GET http://localhost:5000/usuarios/1
+    for usuario in usuarios:
+        if usuario["id"] == id:
+            return jsonify(usuario), 200
+    return jsonify({"mensaje": "Usuario no encontrado"}), 404
+
+# ==========================================
+#  MÉTODO POST - Crear nuevo usuario
+# ==========================================
+@app.route('/usuarios', methods=['POST'])
+def crear_usuario():
+    # Crea un nuevo usuario.
+    # Ejemplo: POST http://localhost:5000/usuarios
+    # JSON:
+    # { "nombre": "Laura" }
+    nuevo_usuario = request.get_json()
+    nuevo_usuario["id"] = len(usuarios) + 1
+    usuarios.append(nuevo_usuario)
+    return jsonify({"mensaje": "Usuario agregado correctamente", "data": nuevo_usuario}), 201
+
+# ==========================================
+#  MÉTODO PUT - Actualizar usuario existente
+# ==========================================
+@app.route('/usuarios/<int:id>', methods=['PUT'])
+def actualizar_usuario(id):
+    # Actualiza el nombre de un usuario existente.
+    # Ejemplo: PUT http://localhost:5000/usuarios/1
+    # JSON:
+    # { "nombre": "Carlos Actualizado" }
+    datos = request.get_json()
+    for usuario in usuarios:
+        if usuario["id"] == id:
+            usuario["nombre"] = datos.get("nombre", usuario["nombre"])
+            return jsonify({"mensaje": "Usuario actualizado correctamente", "data": usuario}), 200
+    return jsonify({"mensaje": "Usuario no encontrado"}), 404
+
+# ==========================================
+#  MÉTODO DELETE - Eliminar usuario
+# ==========================================
+@app.route('/usuarios/<int:id>', methods=['DELETE'])
+def eliminar_usuario(id):
+    # Elimina un usuario de la lista.
+    # Ejemplo: DELETE http://localhost:5000/usuarios/2
+    for usuario in usuarios:
+        if usuario["id"] == id:
+            usuarios.remove(usuario)
+            return jsonify({"mensaje": "Usuario eliminado correctamente"}), 200
+    return jsonify({"mensaje": "Usuario no encontrado"}), 404
+
+# ==========================================
+#  Ejecutar la app
+# ==========================================
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+---
+
+##  Cómo probar la API
+
+1. Guarda el archivo como `app.py`
+2. Instala Flask:
+   ```bash
+   pip install flask
+   ```
+3. Ejecuta el servidor:
+   ```bash
+   python app.py
+   ```
+4. Abre **Postman** o tu navegador y prueba:
+
+| Método | URL | Descripción |
+|---------|-----|-------------|
+| `GET` | http://localhost:5000/usuarios | Muestra todos los usuarios |
+| `GET` | http://localhost:5000/usuarios/1 | Muestra un usuario específico |
+| `POST` | http://localhost:5000/usuarios | Crea un nuevo usuario |
+| `PUT` | http://localhost:5000/usuarios/1 | Actualiza un usuario |
+| `DELETE` | http://localhost:5000/usuarios/2 | Elimina un usuario |
+
+---
+
+##  Ejemplo de uso en Postman
+
+###  POST
+- URL: `http://localhost:5000/usuarios`
+- Body (JSON):
+```json
+{
+  "nombre": "Laura"
+}
+```
+
+###  PUT
+- URL: `http://localhost:5000/usuarios/1`
+- Body (JSON):
+```json
+{
+  "nombre": "Carlos Actualizado"
+}
+```
+
+###  DELETE
+- URL: `http://localhost:5000/usuarios/2`
+
+---
+
+##  Resumen final
+
+| Método | Acción | Ejemplo simple | Descripción |
+|---------|---------|----------------|--------------|
+| **GET** | Leer | Ver todos los usuarios | Solo consulta datos |
+| **POST** | Crear | Agregar un usuario nuevo | Envía datos nuevos |
+| **PUT** | Actualizar | Cambiar nombre de un usuario | Modifica datos existentes |
+| **DELETE** | Eliminar | Borrar un usuario | Quita datos del servidor |
+
+---
+
